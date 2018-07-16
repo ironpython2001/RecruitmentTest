@@ -15,7 +15,7 @@ Please implement C# code that calculates the total price of a given set of items
 
 **Notes**
 
-- --The implementation should be a fully working maintainable pricing solution that is of production quality
-- --This task doesn&#39;t require implementing a shopping basket or an eCommerce web site
-- --As a guideline, please aim to spend about two hours working on a solution for this task
-- --The task and / or solution shouldn&#39;t be publicly shared, eg. using your GitHub profile or other channels
+- The implementation should be a fully working maintainable pricing solution that is of production quality
+- This task doesn&#39;t require implementing a shopping basket or an eCommerce web site
+- As a guideline, please aim to spend about two hours working on a solution for this task
+- The task and / or solution shouldn&#39;t be publicly shared, eg. using your GitHub profile or other channels
