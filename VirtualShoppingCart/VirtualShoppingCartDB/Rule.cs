@@ -4,7 +4,7 @@ using System.Text;
 
 namespace VirtualShoppingCartDB
 {
-    class Rule
+    public class Rule
     {
     }
 }
