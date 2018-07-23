@@ -32,27 +32,22 @@ namespace VirtualShoppingCartDB
         }
         
 
-        public void Insert(CartItem item)
+        public void AddItem(CartItem item)
         {
             this.Items.Add(item);
             this._lastUpdatedDate= DateTime.Now;
         }
 
-        //public void Update(CartItem item)
-        //{
-        //    var exists = this.Items.Exists(x => x.ID == item.ID);
-        //    if(exists)
-        //    {
-        //        var ItemToUpdate = this.Items.Where(x => x.ID== item.ID).First();
-        //        ItemToUpdate.Quantity = ;
-        //        ItemToUpdate.Price = Price;
-        //        LastUpdate = DateTime.Now;
-
-        //    }
-
-        //    CartItem Item = Items[RowID];
-            
-        //}
+        public void Update(CartItem item)
+        {
+            var exists = this.Items.Exists(x => x.ID == item.ID);
+            if (exists)
+            {
+                var ItemToUpdate = this.Items.Where(x => x.ID == item.ID).First();
+                ItemToUpdate.Quantity = item.Quantity;
+                this._lastUpdatedDate= DateTime.Now;
+            }
+        }
 
         //public void DeleteItem(int rowID)
         //{
@@ -91,7 +86,7 @@ namespace VirtualShoppingCartDB
         //    }
         //}
 
-        
+
     }
 
 }
