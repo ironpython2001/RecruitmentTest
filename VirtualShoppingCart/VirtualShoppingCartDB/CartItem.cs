@@ -36,15 +36,13 @@ namespace VirtualShoppingCartDB
                 this._subTotal = this.CalculateSubTotal(this.Quantity, this.Product.Price);
                 return _subTotal;
             }
+            set
+            {
+                this._subTotal = value;
+            }
+            
         }
-        public string GetApplicationRoot()
-        {
-            var exePath = Path.GetDirectoryName(System.Reflection
-                              .Assembly.GetExecutingAssembly().CodeBase);
-            Regex appPathMatcher = new Regex(@"(?<!fil)[A-Za-z]:\\+[\S\s]*?(?=\\+bin)");
-            var appRoot = appPathMatcher.Match(exePath).Value;
-            return appRoot;
-        }
+       
         public CartItem(Product product, int quantity)
         {
             this._id = new Guid();
@@ -61,6 +59,23 @@ namespace VirtualShoppingCartDB
                 this.Quantity = this.Quantity + quantity;
                 this._subTotal = this.CalculateSubTotal(this.Quantity, product.Price);
             }
+        }
+
+        public (int quantity, double SubTotal) UpdateCartItem(Product product, int quantity)
+        {
+            var returnValue = (Quantity: default(int), SubTotal: default(double));
+            if (Rule.IsOfferApplicable(product,quantity))
+            {
+                var offerRule = Rule.ApplyOffer(product, quantity);
+                returnValue.Quantity = offerRule.quantity;
+                returnValue.SubTotal = offerRule.SubTotal;
+            }
+            else
+            {
+                returnValue.Quantity = this.Quantity + quantity;
+                returnValue.SubTotal= this.CalculateSubTotal(quantity, product.Price);
+            }
+            return returnValue;
         }
 
         private double CalculateSubTotal(int quantity,double price)

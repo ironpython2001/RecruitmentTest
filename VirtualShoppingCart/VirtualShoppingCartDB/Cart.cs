@@ -38,13 +38,15 @@ namespace VirtualShoppingCartDB
             this._lastUpdatedDate= DateTime.Now;
         }
 
-        public void Update(CartItem item)
+        public void Update(CartItem item,int quantity)
         {
             var exists = this.Items.Exists(x => x.ID == item.ID);
             if (exists)
             {
-                var ItemToUpdate = this.Items.Where(x => x.ID == item.ID).First();
-                ItemToUpdate.Quantity = item.Quantity;
+                var itemToUpdate = this.Items.Where(x => x.ID == item.ID).First();
+                var result = itemToUpdate.UpdateCartItem(itemToUpdate.Product, quantity);
+                itemToUpdate.Quantity = result.quantity;
+                itemToUpdate.SubTotal = result.SubTotal;
                 this._lastUpdatedDate= DateTime.Now;
             }
         }
