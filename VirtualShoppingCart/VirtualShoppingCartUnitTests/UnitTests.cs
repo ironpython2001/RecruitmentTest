@@ -61,7 +61,13 @@ namespace VirtualShoppingCartUnitTests
         [TestMethod]
         public void DeleteItemsFromShoppingCart()
         {
-
+            //take second element
+            var nStep = 1;
+            var beforeCount = this._cart.Items.Count;
+            var cartItem = this._cart.Items.Where((x, i) => i % nStep == 0).First();
+            this._cart.Delete(cartItem);
+            var afterCount = this._cart.Items.Count;
+            Assert.IsTrue(afterCount== (beforeCount-1));
         }
 
         [TestMethod]

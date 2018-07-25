@@ -51,11 +51,16 @@ namespace VirtualShoppingCartDB
             }
         }
 
-        //public void DeleteItem(int rowID)
-        //{
-        //    Items.RemoveAt(rowID);
-        //    LastUpdate = DateTime.Now;
-        //}
+        public void Delete(CartItem item)
+        {
+            var exists = this.Items.Exists(x => x.ID == item.ID);
+            if (exists)
+            {
+                this.Items.Remove(item);
+                    
+            }
+            this._lastUpdatedDate = DateTime.Now;
+        }
 
         //private int ItemIndexOfID(int ProductID)
         //{
