@@ -13,7 +13,7 @@ namespace VirtualShoppingCartDB
             //for demo purpose for productid=1 has only offers
             if (product.ProductID == 1)
             {
-                if (quantity == 2)
+                if (quantity > 2)
                 { return true; }
                 else
                 { return false; }
@@ -27,7 +27,7 @@ namespace VirtualShoppingCartDB
             //for demo purpose for productid=1 has only offers
             if (product.ProductID == 1)
             {
-                if (quantity == 2)
+                if (quantity > 2)
                 {
                     //buy 2 get 1
                     returnValue.quantity = quantity + 1;

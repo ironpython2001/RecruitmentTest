@@ -55,7 +55,7 @@ namespace VirtualShoppingCartUnitTests
             var nStep = 1;
             var cartItem = this._cart.Items.Where((x, i) => i % nStep == 0).First();
             this._cart.Update(cartItem,2);
-            Assert.IsTrue(cartItem.Quantity == 3);
+            Assert.IsTrue(cartItem.Quantity == 4);
         }
 
         [TestMethod]
@@ -73,7 +73,14 @@ namespace VirtualShoppingCartUnitTests
         [TestMethod]
         public void CheckOffersAppliedOnProduct1()
         {
-
+            var prod4 = new Product()
+            {
+                ProductID = 1,
+                ProductName = "wwf",
+                ImageUrl = "http://cart.com/wwf.jpg",
+                Price = 100.02
+            };
+            this._cart.AddItem(new CartItem(prod4, 3));
         }
 
 
