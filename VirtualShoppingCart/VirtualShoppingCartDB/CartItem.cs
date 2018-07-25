@@ -1,11 +1,20 @@
-﻿using System;
+﻿using Microsoft.CodeAnalysis.CSharp.Scripting;
+using System;
 using System.Collections.Generic;
 using System.Text;
+using System.IO;
+using System.Text.RegularExpressions;
 
 namespace VirtualShoppingCartDB
 {
     public class CartItem
     {
+        public class Globals
+        {
+            public int param_quantity;
+        }
+        
+
         //assumption is that guid is unique
         private Guid _id;
         public Guid ID
@@ -28,13 +37,30 @@ namespace VirtualShoppingCartDB
                 return _subTotal;
             }
         }
-        
+        public string GetApplicationRoot()
+        {
+            var exePath = Path.GetDirectoryName(System.Reflection
+                              .Assembly.GetExecutingAssembly().CodeBase);
+            Regex appPathMatcher = new Regex(@"(?<!fil)[A-Za-z]:\\+[\S\s]*?(?=\\+bin)");
+            var appRoot = appPathMatcher.Match(exePath).Value;
+            return appRoot;
+        }
         public CartItem(Product product, int quantity)
         {
             this._id = new Guid();
             this.Product = product;
-            this.Quantity = this.Quantity + quantity;
-            this._subTotal = this.CalculateSubTotal(this.Quantity, product.Price);
+            //check offer is applicable for this product and quantity
+            if (Rule.IsOfferApplicable(product, quantity))
+            {
+                var offerRule = Rule.ApplyOffer(product, quantity);
+                this.Quantity = offerRule.quantity;
+                this._subTotal = offerRule.SubTotal;
+            }
+            else
+            {
+                this.Quantity = this.Quantity + quantity;
+                this._subTotal = this.CalculateSubTotal(this.Quantity, product.Price);
+            }
         }
 
         private double CalculateSubTotal(int quantity,double price)
